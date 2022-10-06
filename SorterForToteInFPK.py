@@ -58,6 +58,7 @@ class WindowSortingInFPK(tk.Tk):
         container_frame.tkraise()
 
 
+
 class HelloUsers(ttk.Frame):
     def __init__(self, container, *args, **kwargs):
         super().__init__(container, *args, **kwargs)
@@ -79,7 +80,7 @@ class LabelOnConteiner(ttk.Frame):
         self.one_cell.pack(ipady=30, ipadx=50,fill="both", expand=True)
 
         self.carrier = tk.StringVar(name="Przewoźnik")
-        self.colour = tk.StringVar(name="Yellow")
+        self.colour = tk.StringVar(name="grey")
         self.prepared_on_time = tk.StringVar(name="Gotowe na godzinę")
         self.purchase_invoice = tk.StringVar(name="Czy fakturowane?")
         self.number_booking = tk.StringVar(name="Booking")
@@ -103,9 +104,17 @@ class LabelOnConteiner(ttk.Frame):
         show_color = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background=self.colour, anchor=CENTER, textvariable=self.colour, )
         show_color.pack(side="top",)
 
+
+        def Zmiana_koloru_tla():
+            show_color.config(background="green")
+            print(self.colour)
+
+
         for child in self.one_cell.winfo_children():
             child.pack_configure(ipadx=20, ipady=20, fill='both', expand=True)
 
+        zmiana_coloru = ttk.Button(self.one_cell, text="Zmiana_koloru",command=Zmiana_koloru_tla)
+        zmiana_coloru.pack()
 
 class InputToSorting(ttk.Frame,):
     def __init__(self, container, *args, **kwargs):
@@ -147,6 +156,9 @@ class InputToSorting(ttk.Frame,):
             self.purchase_invoice.set("TAK wystawiamy Fakturę!" if self.routkey[-1:] == "1" else "BEZ Faktury!")
             self.number_booking.set(random.choice(list(booking.keys())))
             self.destination_country.set(booking[self.number_booking.get()])
+
+            # if self.colour != "grey":
+            #     LabelOnConteiner.Zmiana_koloru_tła()
 
             root.show_frames(LabelOnConteiner)
         else:
