@@ -34,14 +34,11 @@ class WindowSortingInFPK(tk.Tk):
         frame1 = SignatureMadeBy(self, padding=(2, 2))
         frame1.grid(column=0, row=6, sticky="ES")
 
-        frame2 = InputToSorting(self, padding=(10, 10))
-        frame2.grid(column=0, row=1, sticky="EW")
-
         frame5 = ThereIsNoSuchNumber(container_label, self, padding=(7, 7))
-        frame5.grid(column=0, row=2, sticky="EW")
+        frame5.grid(column=0, row=2, sticky="S")
 
         frame4 = TransferToDirectDepartment(container_label, self, padding=(7, 7), )
-        frame4.grid(column=0, row=2, sticky="EW")
+        frame4.grid(column=0, row=2, sticky="S")
 
         frame3 = LabelOnConteiner(container_label, self, padding=(7, 7), )
         frame3.grid(column=0, row=2, sticky="EW")
@@ -50,13 +47,12 @@ class WindowSortingInFPK(tk.Tk):
         self.frames[ThereIsNoSuchNumber] = frame5
         self.frames[LabelOnConteiner] = frame3
 
-        self.bind("<Return>", frame2.start_input)
-        self.bind("<KP_Enter>", frame2.start_input)
+        self.bind("<Return>", frame3.start_input)
+        self.bind("<KP_Enter>", frame3.start_input)
 
     def show_frames(self, container_label):
         container_frame = self.frames[container_label]
         container_frame.tkraise()
-
 
 
 class HelloUsers(ttk.Frame):
@@ -76,50 +72,6 @@ class LabelOnConteiner(ttk.Frame):
     def __init__(self, container_label, controller, *args, **kwargs):
         super().__init__(container_label, *args, **kwargs)
 
-        self.one_cell = ttk.Frame(self)
-        self.one_cell.pack(ipady=30, ipadx=50,fill="both", expand=True)
-
-        self.carrier = tk.StringVar(name="Przewoźnik")
-        self.colour = tk.StringVar(name="grey")
-        self.prepared_on_time = tk.StringVar(name="Gotowe na godzinę")
-        self.purchase_invoice = tk.StringVar(name="Czy fakturowane?")
-        self.number_booking = tk.StringVar(name="Booking")
-        self.destination_country = tk.StringVar(name="Do jakiego Kraju?")
-
-        show_carrier = ttk.Label(self.one_cell, borderwidth=1, relief='solid',background=self.colour, anchor=CENTER, textvariable=self.carrier, )
-        show_carrier.pack(side="left",)
-
-        show_time = ttk.Label(self.one_cell, borderwidth=1, relief='solid',background=self.colour, anchor=CENTER, textvariable=self.prepared_on_time, )
-        show_time.pack(side="left",)
-
-        show_invoice = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background=self.colour, anchor=CENTER, textvariable=self.purchase_invoice, )
-        show_invoice.pack(side="top", )
-
-        show_booking = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background=self.colour, anchor=CENTER, textvariable=self.number_booking, )
-        show_booking.pack(side="left",)
-
-        show_country = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background=self.colour, anchor=CENTER, textvariable=self.destination_country, )
-        show_country.pack(side="left", )
-
-        show_color = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background=self.colour, anchor=CENTER, textvariable=self.colour, )
-        show_color.pack(side="top",)
-
-
-        def Zmiana_koloru_tla():
-            show_color.config(background="green")
-            print(self.colour)
-
-
-        for child in self.one_cell.winfo_children():
-            child.pack_configure(ipadx=20, ipady=20, fill='both', expand=True)
-
-        zmiana_coloru = ttk.Button(self.one_cell, text="Zmiana_koloru",command=Zmiana_koloru_tla)
-        zmiana_coloru.pack()
-
-class InputToSorting(ttk.Frame,):
-    def __init__(self, container, *args, **kwargs):
-        super().__init__(container, *args, **kwargs)
-
         self.first_cell = ttk.Frame(self)
         self.first_cell.pack(side="top")
 
@@ -130,15 +82,46 @@ class InputToSorting(ttk.Frame,):
         self.window_input = ttk.Entry(self.first_cell, textvariable=self.in_the_window, font=("Segoe UI", 10))
         self.window_input.pack(side="left")
 
+        self.one_cell = ttk.Frame(self)
+        self.one_cell.pack(ipady=17, ipadx=50,fill="both", expand=True)
+
+        self.colour = tk.StringVar()
+        self.colour.set("Yellow")
+
         self.carrier = tk.StringVar(name="Przewoźnik")
-        self.colour = tk.StringVar(name="gray")
         self.prepared_on_time = tk.StringVar(name="Gotowe na godzinę")
         self.purchase_invoice = tk.StringVar(name="Czy fakturowane?")
         self.number_booking = tk.StringVar(name="Booking")
         self.destination_country = tk.StringVar(name="Do jakiego Kraju?")
 
+        self.show_carrier = ttk.Label(self.one_cell, borderwidth=1, relief='solid',background="gray", anchor=CENTER, textvariable=self.carrier, )
+        self.show_carrier.pack(side="left",)
 
-    def start_input(self, *args):
+        self.show_time = ttk.Label(self.one_cell, borderwidth=1, relief='solid',background="gray", anchor=CENTER, textvariable=self.prepared_on_time, )
+        self.show_time.pack(side="left",)
+
+        self.show_invoice = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background="gray", anchor=CENTER, textvariable=self.purchase_invoice, )
+        self.show_invoice.pack(side="top", )
+
+        self.show_booking = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background="gray", anchor=CENTER, textvariable=self.number_booking, )
+        self.show_booking.pack(side="left",)
+
+        self.show_country = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background="gray", anchor=CENTER, textvariable=self.destination_country, )
+        self.show_country.pack(side="left", )
+
+        for child in self.one_cell.winfo_children():
+            child.pack_configure(ipadx=20, ipady=20, fill='both', expand=True,)
+
+        self.colour = tk.StringVar()
+        self.colour.set("Yellow")
+
+        self.carrier = tk.StringVar(name="Przewoźnik")
+        self.prepared_on_time = tk.StringVar(name="Gotowe na godzinę")
+        self.purchase_invoice = tk.StringVar(name="Czy fakturowane?")
+        self.number_booking = tk.StringVar(name="Booking")
+        self.destination_country = tk.StringVar(name="Do jakiego Kraju?")
+
+    def start_input(self, *args, **kwargs):
 
         self.routkey = str(self.in_the_window.get())
 
@@ -157,8 +140,13 @@ class InputToSorting(ttk.Frame,):
             self.number_booking.set(random.choice(list(booking.keys())))
             self.destination_country.set(booking[self.number_booking.get()])
 
-            # if self.colour != "grey":
-            #     LabelOnConteiner.Zmiana_koloru_tła()
+            print(f'To jest coler po zmianie {self.colour.get()}')
+
+            self.show_carrier.config(background=self.colour.get())
+            self.show_time.config(background=self.colour.get())
+            self.show_invoice.config(background=self.colour.get())
+            self.show_booking.config(background=self.colour.get())
+            self.show_country.config(background=self.colour.get())
 
             root.show_frames(LabelOnConteiner)
         else:
@@ -175,7 +163,7 @@ class TransferToDirectDepartment(ttk.Frame):
         self.move_to.pack()
 
         self.label_move_to_direct = tk.Label(self.move_to, text=f"Materiał przenieść \n do działu Direct \n <==")
-        self.label_move_to_direct.config(borderwidth=1, relief='solid',height=5, width=50,  background="red", font=("arial", 25, 'bold'), fg='yellow')
+        self.label_move_to_direct.config(borderwidth=1, relief='solid',height=4, width=40,  background="red", font=("arial", 25, 'bold'), fg='yellow')
         self.label_move_to_direct.pack(fill='both', expand=True)
 
 
@@ -187,7 +175,7 @@ class ThereIsNoSuchNumber(ttk.Frame):
         self.no_number.pack()
 
         self.no_label_of_number = tk.Label(self.no_number, text=f"Brak takiej rootki w bazie danych")
-        self.no_label_of_number.config(borderwidth=1, relief='solid', height=5, width=50,  background="Grey", font=("arial", 25, 'bold'), fg='Black',)
+        self.no_label_of_number.config(borderwidth=1, relief='solid', height=4, width=40,  background="Grey", font=("arial", 25, 'bold'), fg='Black',)
         self.no_label_of_number.pack(fill='both', expand=True, )
 
 
