@@ -77,13 +77,13 @@ class LabelOnConteiner(ttk.Frame):
 
         self.in_the_window = tk.StringVar()
         self.title_input = ttk.Label(self.first_cell, text="numer roonki: ")
-        self.title_input.pack(side="left")
+        self.title_input.pack(pady=7, padx=7, side="left")
 
         self.window_input = ttk.Entry(self.first_cell, textvariable=self.in_the_window, font=("Segoe UI", 10))
-        self.window_input.pack(side="left")
+        self.window_input.pack(pady=7, padx=7, side="left")
 
         self.one_cell = ttk.Frame(self)
-        self.one_cell.pack(ipady=17, ipadx=50,fill="both", expand=True)
+        self.one_cell.pack(ipady=16, ipadx=50,fill="both", expand=True)
 
         self.colour = tk.StringVar()
         self.colour.set("Yellow")
@@ -94,7 +94,7 @@ class LabelOnConteiner(ttk.Frame):
         self.number_booking = tk.StringVar(name="Booking")
         self.destination_country = tk.StringVar(name="Do jakiego Kraju?")
 
-        self.show_carrier = ttk.Label(self.one_cell, borderwidth=1, relief='solid',background="gray", anchor=CENTER, textvariable=self.carrier, )
+        self.show_carrier = ttk.Label(self.one_cell, borderwidth=1, relief='solid',background="gray", anchor=CENTER, textvariable=self.carrier,)
         self.show_carrier.pack(side="left",)
 
         self.show_time = ttk.Label(self.one_cell, borderwidth=1, relief='solid',background="gray", anchor=CENTER, textvariable=self.prepared_on_time, )
@@ -140,7 +140,7 @@ class LabelOnConteiner(ttk.Frame):
             self.number_booking.set(random.choice(list(booking.keys())))
             self.destination_country.set(booking[self.number_booking.get()])
 
-            print(f'To jest coler po zmianie {self.colour.get()}')
+            print(f'To jest color po zmianie {self.colour.get()}')
 
             self.show_carrier.config(background=self.colour.get())
             self.show_time.config(background=self.colour.get())
