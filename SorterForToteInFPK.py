@@ -5,6 +5,7 @@ from Colour_dict import colour_dict
 from Time_dict import time_dict
 from Route_direct import route_direct
 from Booking import booking
+from Route_mix import route_mix
 import random
 import tkinter.font as font
 
@@ -62,7 +63,7 @@ class HelloUsers(ttk.Frame):
         self.helo_user = ttk.Frame(self)
         self.helo_user.pack()
 
-        self.text_in_hello = "To jest prosty program \n pomocny w sortowaniu skrzynek "
+        self.text_in_hello = "To jest prosty program \n pomocny sortowaniu krzynek \n zgodnie z przewoźnikiem i czasem "
 
         self.label_hello = tk.Label(self.helo_user, text=self.text_in_hello, font=('Bradley Hand ITC', 15, 'bold'),)
         self.label_hello.pack()
@@ -75,11 +76,12 @@ class LabelOnConteiner(ttk.Frame):
         self.first_cell = ttk.Frame(self)
         self.first_cell.pack(side="top")
 
-        self.in_the_window = tk.StringVar()
-        self.title_input = ttk.Label(self.first_cell, text="numer roonki: ")
+
+        self.title_input = ttk.Label(self.first_cell, text="numer skrzynki: ")
         self.title_input.pack(pady=7, padx=7, side="left")
 
-        self.window_input = ttk.Entry(self.first_cell, textvariable=self.in_the_window, font=("Segoe UI", 10))
+        self.in_the_window = tk.StringVar()
+        self.window_input = ttk.Entry(self.first_cell, width=7, textvariable=self.in_the_window, font=("Segoe UI", 10))
         self.window_input.pack(pady=7, padx=7, side="left")
 
         self.one_cell = ttk.Frame(self)
@@ -112,47 +114,43 @@ class LabelOnConteiner(ttk.Frame):
         for child in self.one_cell.winfo_children():
             child.pack_configure(ipadx=20, ipady=20, fill='both', expand=True,)
 
-        self.colour = tk.StringVar()
-        self.colour.set("Yellow")
-
-        self.carrier = tk.StringVar(name="Przewoźnik")
-        self.prepared_on_time = tk.StringVar(name="Gotowe na godzinę")
-        self.purchase_invoice = tk.StringVar(name="Czy fakturowane?")
-        self.number_booking = tk.StringVar(name="Booking")
-        self.destination_country = tk.StringVar(name="Do jakiego Kraju?")
 
     def start_input(self, *args, **kwargs):
 
-        self.routkey = str(self.in_the_window.get())
+        if (len(self.in_the_window.get())) == 7:
+            self.routkey = random.choice(route_mix)
 
-        if self.routkey in route_direct:
-            print(f"Ta Rootka na directy {self.routkey}")
+        #self.routkey = str(self.in_the_window.get())
 
-            root.show_frames(TransferToDirectDepartment)
+            if self.routkey in route_direct:
+                print(f"Ta Rootka na directy {self.routkey}")
 
-        elif self.routkey[:3] in route_dict.keys():
-            print(f'To jest normalna rootka {self.routkey}')
+                root.show_frames(TransferToDirectDepartment)
 
-            self.carrier.set(route_dict[self.routkey[:3]])
-            self.colour.set(colour_dict[self.carrier.get()])
-            self.prepared_on_time.set(time_dict[self.carrier.get()])
-            self.purchase_invoice.set("TAK wystawiamy Fakturę!" if self.routkey[-1:] == "1" else "BEZ Faktury!")
-            self.number_booking.set(random.choice(list(booking.keys())))
-            self.destination_country.set(booking[self.number_booking.get()])
+            elif self.routkey[:3] in route_dict.keys():
+                print(f'To jest normalna rootka {self.routkey}')
 
-            print(f'To jest color po zmianie {self.colour.get()}')
+                self.carrier.set(route_dict[self.routkey[:3]])
+                self.colour.set(colour_dict[self.carrier.get()])
+                self.prepared_on_time.set(time_dict[self.carrier.get()])
+                self.purchase_invoice.set("TAK wystawiamy Fakturę!" if self.routkey[-1:] == "1" else "BEZ Faktury!")
+                self.number_booking.set(random.choice(list(booking.keys())))
+                self.destination_country.set(booking[self.number_booking.get()])
 
-            self.show_carrier.config(background=self.colour.get())
-            self.show_time.config(background=self.colour.get())
-            self.show_invoice.config(background=self.colour.get())
-            self.show_booking.config(background=self.colour.get())
-            self.show_country.config(background=self.colour.get())
+                print(f'To jest color po zmianie {self.colour.get()}')
 
-            root.show_frames(LabelOnConteiner)
-        else:
-            print(f"to jest żadna rootka")
+                self.show_carrier.config(background=self.colour.get())
+                self.show_time.config(background=self.colour.get())
+                self.show_invoice.config(background=self.colour.get())
+                self.show_booking.config(background=self.colour.get())
+                self.show_country.config(background=self.colour.get())
 
-            root.show_frames(ThereIsNoSuchNumber)
+                root.show_frames(LabelOnConteiner)
+
+            else:
+                print(f"to jest żadna rootka")
+
+                root.show_frames(ThereIsNoSuchNumber)
 
 
 class TransferToDirectDepartment(ttk.Frame):
