@@ -4,7 +4,7 @@ from Route_dict import route_dict
 from Colour_dict import colour_dict
 from Time_dict import time_dict
 from Route_direct import route_direct
-from Booking import booking
+from Booking import booking, keysbooking
 from Route_mix import route_mix
 import random
 import tkinter.font as font
@@ -63,9 +63,11 @@ class HelloUsers(ttk.Frame):
         self.helo_user = ttk.Frame(self)
         self.helo_user.pack()
 
-        self.text_in_hello = "To jest prosty program \n pomocny sortowaniu krzynek \n zgodnie z przewoźnikiem i czasem "
+        self.text_in_hello = "To aplikacja rozszyfrowująca nr skrzynki transportowej w centrum dystrybucji." \
+                             "\n każda skrzynka to zakupy dokonane przez klienta. " \
+                             "\n program podaje przewoźnika i czas odjazdu"
 
-        self.label_hello = tk.Label(self.helo_user, text=self.text_in_hello, font=('Bradley Hand ITC', 15, 'bold'),)
+        self.label_hello = tk.Label(self.helo_user, text=self.text_in_hello, font=('Non Sans', 14, 'normal'),)
         self.label_hello.pack()
 
 
@@ -77,7 +79,7 @@ class LabelOnConteiner(ttk.Frame):
         self.first_cell.pack(side="top")
 
 
-        self.title_input = ttk.Label(self.first_cell, text="numer skrzynki: ")
+        self.title_input = ttk.Label(self.first_cell, text="7 cyfrowy numer skrzynki: ")
         self.title_input.pack(pady=7, padx=7, side="left")
 
         self.in_the_window = tk.StringVar()
@@ -117,8 +119,14 @@ class LabelOnConteiner(ttk.Frame):
 
     def start_input(self, *args, **kwargs):
 
-        if (len(self.in_the_window.get())) == 7:
-            self.routkey = random.choice(route_mix)
+        self.number_tote = self.in_the_window.get()
+        if (len(self.number_tote)) == 7:
+
+            self.index_route_mix = int(self.number_tote[2:4])
+            self.routkey = route_mix[self.index_route_mix]
+
+            self.index_booking = int(self.number_tote[3])
+            self.key_booking = keysbooking[self.index_booking]
 
         #self.routkey = str(self.in_the_window.get())
 
@@ -134,8 +142,8 @@ class LabelOnConteiner(ttk.Frame):
                 self.colour.set(colour_dict[self.carrier.get()])
                 self.prepared_on_time.set(time_dict[self.carrier.get()])
                 self.purchase_invoice.set("TAK wystawiamy Fakturę!" if self.routkey[-1:] == "1" else "BEZ Faktury!")
-                self.number_booking.set(random.choice(list(booking.keys())))
-                self.destination_country.set(booking[self.number_booking.get()])
+                self.number_booking.set(self.key_booking)
+                self.destination_country.set(booking[self.key_booking])
 
                 print(f'To jest color po zmianie {self.colour.get()}')
 
