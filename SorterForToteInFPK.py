@@ -145,7 +145,7 @@ class LabelOnConteiner(ttk.Frame):
                 print(f'To jest color po zmianie {self.colour.get()}')
 
                 self.show_carrier.config(background=self.colour.get(), foreground="White" if self.colour.get() == "Blue" else "Black")
-                self.show_time.config(background=self.colour.get(),foreground="White" if self.colour.get() == "Blue" else "Black")
+                self.show_time.config(background=self.colour.get(), foreground="White" if self.colour.get() == "Blue" else "Black")
                 self.show_invoice.config(background=self.colour.get(), foreground="White" if self.colour.get() == "Blue" else "Black")
                 self.show_booking.config(background=self.colour.get(), foreground="White" if self.colour.get() == "Blue" else "Black")
                 self.show_country.config(background=self.colour.get(), foreground="White" if self.colour.get() == "Blue" else "Black")
@@ -196,4 +196,5 @@ class SignatureMadeBy(ttk.Frame):
 if __name__ == "__main__":
 
     root = WindowSortingInFPK()
+    style = ttk.Style(root)
     root.mainloop()
