@@ -90,18 +90,17 @@ class LabelOnConteiner(ttk.Frame):
         self.one_cell.pack(ipady=16, ipadx=50,fill="both", expand=True)
 
         self.colour = tk.StringVar()
-        self.colour.set("Yellow")
 
-        self.carrier = tk.StringVar(name="Przewoźnik")
-        self.prepared_on_time = tk.StringVar(name="Gotowe na godzinę")
-        self.purchase_invoice = tk.StringVar(name="Czy fakturowane?")
-        self.number_booking = tk.StringVar(name="Booking")
-        self.destination_country = tk.StringVar(name="Do jakiego Kraju?")
+        self.carrier = tk.StringVar(value="Przewoźnik")
+        self.prepared_on_time = tk.StringVar(value="Przesyłka gotowa na: ")
+        self.purchase_invoice = tk.StringVar(value="Czy wystawić fakturę?")
+        self.number_booking = tk.StringVar(value="booking")
+        self.destination_country = tk.StringVar(value="Do jakiego kraju?")
 
-        self.show_carrier = ttk.Label(self.one_cell, borderwidth=1, relief='solid',background="gray", anchor=CENTER, textvariable=self.carrier,)
+        self.show_carrier = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background="gray", anchor=CENTER, textvariable=self.carrier,)
         self.show_carrier.pack(side="left",)
 
-        self.show_time = ttk.Label(self.one_cell, borderwidth=1, relief='solid',background="gray", anchor=CENTER, textvariable=self.prepared_on_time, )
+        self.show_time = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background="gray", anchor=CENTER, textvariable=self.prepared_on_time, )
         self.show_time.pack(side="left",)
 
         self.show_invoice = ttk.Label(self.one_cell, borderwidth=1, relief='solid', background="gray", anchor=CENTER, textvariable=self.purchase_invoice, )
@@ -128,8 +127,6 @@ class LabelOnConteiner(ttk.Frame):
             self.index_booking = int(self.number_tote[3])
             self.key_booking = keysbooking[self.index_booking]
 
-        #self.routkey = str(self.in_the_window.get())
-
             if self.routkey in route_direct:
                 print(f"Ta Rootka na directy {self.routkey}")
 
@@ -147,11 +144,11 @@ class LabelOnConteiner(ttk.Frame):
 
                 print(f'To jest color po zmianie {self.colour.get()}')
 
-                self.show_carrier.config(background=self.colour.get())
-                self.show_time.config(background=self.colour.get())
-                self.show_invoice.config(background=self.colour.get())
-                self.show_booking.config(background=self.colour.get())
-                self.show_country.config(background=self.colour.get())
+                self.show_carrier.config(background=self.colour.get(), foreground="White" if self.colour.get() == "Blue" else "Black")
+                self.show_time.config(background=self.colour.get(),foreground="White" if self.colour.get() == "Blue" else "Black")
+                self.show_invoice.config(background=self.colour.get(), foreground="White" if self.colour.get() == "Blue" else "Black")
+                self.show_booking.config(background=self.colour.get(), foreground="White" if self.colour.get() == "Blue" else "Black")
+                self.show_country.config(background=self.colour.get(), foreground="White" if self.colour.get() == "Blue" else "Black")
 
                 root.show_frames(LabelOnConteiner)
 
@@ -168,8 +165,8 @@ class TransferToDirectDepartment(ttk.Frame):
         self.move_to = ttk.Frame(self)
         self.move_to.pack()
 
-        self.label_move_to_direct = tk.Label(self.move_to, text=f"Materiał przenieść \n do działu Direct \n <==")
-        self.label_move_to_direct.config(borderwidth=1, relief='solid',height=4, width=40,  background="red", font=("arial", 25, 'bold'), fg='yellow')
+        self.label_move_to_direct = tk.Label(self.move_to, text=f"Materiał przenieść \n do działu klineta VIP \n <==")
+        self.label_move_to_direct.config(borderwidth=1, relief='solid',height=4, width=40,  background="green", font=("arial", 25, 'bold'), fg='white')
         self.label_move_to_direct.pack(fill='both', expand=True)
 
 

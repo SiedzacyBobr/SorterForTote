@@ -5,7 +5,7 @@ class Time_Dict:
     
 time_dict = Time_Dict()
 time_dict = {
-        "TNT": "Dodogadania",
+        "TNT": "Do ustalenia z dostawcą",
         "DHL": "16:00",
         "UPS": "17:45",
         "SCS": "20:00",
